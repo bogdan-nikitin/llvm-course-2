@@ -489,6 +489,7 @@ set(LLVM_ALL_TARGETS
   LoongArch
   Mips
   MSP430
+  MyArch
   NVPTX
   PowerPC
   RISCV
