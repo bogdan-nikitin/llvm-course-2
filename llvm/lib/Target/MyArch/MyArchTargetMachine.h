@@ -1,13 +1,13 @@
 #ifndef LLVM_LIB_TARGET_MYARCH_MYARCHTARGETMACHINE_H
 #define LLVM_LIB_TARGET_MYARCH_MYARCHTARGETMACHINE_H
 
-#include "llvm/Target/TargetMachine.h"
+#include "llvm/CodeGen/CodeGenTargetMachineImpl.h"
 #include <optional>
 
 namespace llvm {
 extern Target TheMyArchTarget;
 
-class MyArchTargetMachine : public LLVMTargetMachine {
+class MyArchTargetMachine : public CodeGenTargetMachineImpl {
   std::unique_ptr<TargetLoweringObjectFile> TLOF;
 public:
   MyArchTargetMachine(const Target &T, const Triple &TT, StringRef CPU,
