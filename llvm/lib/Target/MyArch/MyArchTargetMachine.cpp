@@ -1,4 +1,5 @@
 #include "MyArchTargetMachine.h"
+#include "MyArch.h"
 #include "TargetInfo/MyArchTargetInfo.h"
 #include "llvm/CodeGen/Passes.h"
 #include "llvm/CodeGen/TargetLoweringObjectFileImpl.h"
@@ -12,6 +13,7 @@ using namespace llvm;
 
 extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeMyArchTarget() {
   // Register the target.
+  MYARCH_DUMP_CYAN
   RegisterTargetMachine<MyArchTargetMachine> A(getTheMyArchTarget());
 }
 
@@ -25,7 +27,7 @@ static std::string computeDataLayout(const Triple &TT, StringRef CPU,
 static Reloc::Model getEffectiveRelocModel(bool JIT,
                                            std::optional<Reloc::Model> RM) {
   if (!RM || JIT)
-     return Reloc::Static;
+    return Reloc::Static;
   return *RM;
 }
 
@@ -36,10 +38,12 @@ MyArchTargetMachine::MyArchTargetMachine(const Target &T, const Triple &TT,
                                          std::optional<CodeModel::Model> CM,
                                          CodeGenOptLevel OL, bool JIT,
                                          bool IsLittle)
-    : CodeGenTargetMachineImpl(T, computeDataLayout(TT, CPU, Options, IsLittle), TT,
-                        CPU, FS, Options, getEffectiveRelocModel(JIT, RM),
-                        getEffectiveCodeModel(CM, CodeModel::Small), OL),
+    : CodeGenTargetMachineImpl(T, computeDataLayout(TT, CPU, Options, IsLittle),
+                               TT, CPU, FS, Options,
+                               getEffectiveRelocModel(JIT, RM),
+                               getEffectiveCodeModel(CM, CodeModel::Small), OL),
       TLOF(std::make_unique<TargetLoweringObjectFileELF>()) {
+  MYARCH_DUMP_CYAN
   initAsmInfo();
 }
 
