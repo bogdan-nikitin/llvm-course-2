@@ -3,12 +3,16 @@
 #include "TargetInfo/MyArchTargetInfo.h"
 #include "llvm/MC/MCInstrInfo.h"
 #include "llvm/MC/MCRegisterInfo.h"
+#include "llvm/MC/MCSubtargetInfo.h"
 #include "llvm/MC/TargetRegistry.h"
 
 using namespace llvm;
 
 #define GET_REGINFO_MC_DESC
 #include "MyArchGenRegisterInfo.inc"
+
+#define GET_SUBTARGETINFO_MC_DESC
+#include "MyArchGenSubtargetInfo.inc"
 
 #define GET_INSTRINFO_MC_DESC
 #include "MyArchGenInstrInfo.inc"
@@ -18,6 +22,12 @@ static MCRegisterInfo *createMyArchMCRegisterInfo(const Triple &TT) {
   MCRegisterInfo *X = new MCRegisterInfo();
   InitMyArchMCRegisterInfo(X, MyArch::R0);
   return X;
+}
+
+static MCSubtargetInfo *createMyArchMCSubtargetInfo(const Triple &TT,
+                                                 StringRef CPU, StringRef FS) {
+  MYARCH_DUMP_MAGENTA
+  return createMyArchMCSubtargetInfoImpl(TT, CPU, /*TuneCPU*/ CPU, FS);
 }
 
 static MCInstrInfo *createMyArchMCInstrInfo() {
@@ -36,4 +46,7 @@ extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeMyArchTargetMC() {
                                     createMyArchMCRegisterInfo);
   // Register the MC instruction info.
   TargetRegistry::RegisterMCInstrInfo(TheMyArchTarget, createMyArchMCInstrInfo);
+  // Register the MC subtarget info.
+  TargetRegistry::RegisterMCSubtargetInfo(TheMyArchTarget,
+                                          createMyArchMCSubtargetInfo);
 }
