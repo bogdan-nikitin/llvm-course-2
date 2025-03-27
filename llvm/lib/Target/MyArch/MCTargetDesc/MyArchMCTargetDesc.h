@@ -7,4 +7,9 @@
  #define GET_REGINFO_ENUM
  #include "MyArchGenRegisterInfo.inc"
 
+// Defines symbolic names for the MyArch instructions.
+ #define GET_INSTRINFO_ENUM
+ #include "MyArchGenInstrInfo.inc"
+ 
+
 #endif // LLVM_LIB_TARGET_MYARCH_MCTARGETDESC_MYARCHMCTARGETDESC_H
