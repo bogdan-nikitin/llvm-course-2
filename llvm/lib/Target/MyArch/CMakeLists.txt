@@ -6,6 +6,7 @@ tablegen(LLVM MyArchGenRegisterInfo.inc -gen-register-info)
 tablegen(LLVM MyArchGenInstrInfo.inc -gen-instr-info)
 tablegen(LLVM MyArchGenSubtargetInfo.inc -gen-subtarget)
 tablegen(LLVM MyArchGenMCPseudoLowering.inc -gen-pseudo-lowering)
+tablegen(LLVM MyArchGenDAGISel.inc -gen-dag-isel)
 
 add_public_tablegen_target(MyArchCommonTableGen)
 
@@ -15,6 +16,7 @@ add_llvm_target(MyArchCodeGen
   MyArchInstrInfo.cpp
   MyArchSubtarget.cpp
   MyArchAsmPrinter.cpp
+  MyArchISelDagToDag.cpp
 
   LINK_COMPONENTS
   CodeGen
@@ -23,6 +25,7 @@ add_llvm_target(MyArchCodeGen
   Target
   MyArchInfo
   AsmPrinter
+  SelectionDAG
 
   ADD_TO_COMPONENT
   MyArch

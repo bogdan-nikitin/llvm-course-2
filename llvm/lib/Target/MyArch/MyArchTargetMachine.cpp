@@ -63,8 +63,13 @@ public:
   MyArchPassConfig(MyArchTargetMachine &TM, PassManagerBase &PM)
       : TargetPassConfig(TM, PM) {}
 
+  MyArchTargetMachine &getMyArchTargetMachine() const {
+    return getTM<MyArchTargetMachine>();
+  }
+
   bool addInstSelector() override {
     MYARCH_DUMP_CYAN
+    addPass(createMyArchISelDag(getMyArchTargetMachine(), getOptLevel()));
     return false;
   }
 };
