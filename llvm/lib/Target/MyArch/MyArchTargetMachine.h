@@ -25,9 +25,7 @@ public:
 
   // Pass Pipeline Configuration
   TargetPassConfig *createPassConfig(PassManagerBase &PM) override;
-  TargetLoweringObjectFile *getObjFileLowering() const override {
-    return TLOF.get();
-  }
+  TargetLoweringObjectFile *getObjFileLowering() const override;
 };
 } // end namespace llvm
 

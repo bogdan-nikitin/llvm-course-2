@@ -80,3 +80,8 @@ TargetPassConfig *MyArchTargetMachine::createPassConfig(PassManagerBase &PM) {
   MYARCH_DUMP_CYAN
   return new MyArchPassConfig(*this, PM);
 }
+
+TargetLoweringObjectFile *MyArchTargetMachine::getObjFileLowering() const {
+  MYARCH_DUMP_CYAN
+  return TLOF.get();
+}
