@@ -1,10 +1,13 @@
 #include "MCTargetDesc/MyArchInfo.h"
 #include "MyArch.h"
+#include "MyArchMCAsmInfo.h"
 #include "TargetInfo/MyArchTargetInfo.h"
+#include "llvm/MC/MCDwarf.h"
 #include "llvm/MC/MCInstrInfo.h"
 #include "llvm/MC/MCRegisterInfo.h"
 #include "llvm/MC/MCSubtargetInfo.h"
 #include "llvm/MC/TargetRegistry.h"
+#include "llvm/Support/ErrorHandling.h"
 
 using namespace llvm;
 
@@ -24,10 +27,21 @@ static MCRegisterInfo *createMyArchMCRegisterInfo(const Triple &TT) {
   return X;
 }
 
-static MCSubtargetInfo *createMyArchMCSubtargetInfo(const Triple &TT,
-                                                 StringRef CPU, StringRef FS) {
+static MCSubtargetInfo *
+createMyArchMCSubtargetInfo(const Triple &TT, StringRef CPU, StringRef FS) {
   MYARCH_DUMP_MAGENTA
   return createMyArchMCSubtargetInfoImpl(TT, CPU, /*TuneCPU*/ CPU, FS);
+}
+
+static MCAsmInfo *createMyArchMCAsmInfo(const MCRegisterInfo &MRI,
+                                        const Triple &TT,
+                                        const MCTargetOptions &Options) {
+  MYARCH_DUMP_MAGENTA
+  MCAsmInfo *MAI = new MyArchELFMCAsmInfo(TT);
+  unsigned SP = MRI.getDwarfRegNum(MyArch::R1, true);
+  MCCFIInstruction Inst = MCCFIInstruction::cfiDefCfa(nullptr, SP, 0);
+  MAI->addInitialFrameState(Inst);
+  return MAI;
 }
 
 static MCInstrInfo *createMyArchMCInstrInfo() {
@@ -41,6 +55,7 @@ static MCInstrInfo *createMyArchMCInstrInfo() {
 extern "C" LLVM_EXTERNAL_VISIBILITY void LLVMInitializeMyArchTargetMC() {
   MYARCH_DUMP_MAGENTA
   Target &TheMyArchTarget = getTheMyArchTarget();
+  RegisterMCAsmInfoFn X(TheMyArchTarget, createMyArchMCAsmInfo);
   // Register the MC register info.
   TargetRegistry::RegisterMCRegInfo(TheMyArchTarget,
                                     createMyArchMCRegisterInfo);
