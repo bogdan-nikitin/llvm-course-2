@@ -55,6 +55,23 @@ MyArchTargetMachine::MyArchTargetMachine(const Target &T, const Triple &TT,
                                          CodeGenOptLevel OL, bool JIT)
     : MyArchTargetMachine(T, TT, CPU, FS, Options, RM, CM, OL, JIT, true) {}
 
+namespace {
+
+/// MyArch Code Generator Pass Configuration Options.
+class MyArchPassConfig : public TargetPassConfig {
+public:
+  MyArchPassConfig(MyArchTargetMachine &TM, PassManagerBase &PM)
+      : TargetPassConfig(TM, PM) {}
+
+  bool addInstSelector() override {
+    MYARCH_DUMP_CYAN
+    return false;
+  }
+};
+
+} // end anonymous namespace
+
 TargetPassConfig *MyArchTargetMachine::createPassConfig(PassManagerBase &PM) {
-  return new TargetPassConfig(*this, PM);
+  MYARCH_DUMP_CYAN
+  return new MyArchPassConfig(*this, PM);
 }
