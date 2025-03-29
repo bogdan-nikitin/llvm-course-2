@@ -5,6 +5,7 @@ set(LLVM_TARGET_DEFINITIONS MyArch.td)
 tablegen(LLVM MyArchGenRegisterInfo.inc -gen-register-info)
 tablegen(LLVM MyArchGenInstrInfo.inc -gen-instr-info)
 tablegen(LLVM MyArchGenSubtargetInfo.inc -gen-subtarget)
+tablegen(LLVM MyArchGenMCPseudoLowering.inc -gen-pseudo-lowering)
 
 add_public_tablegen_target(MyArchCommonTableGen)
 
@@ -13,6 +14,7 @@ add_llvm_target(MyArchCodeGen
   MyArchRegisterInfo.cpp
   MyArchInstrInfo.cpp
   MyArchSubtarget.cpp
+  MyArchAsmPrinter.cpp
 
   LINK_COMPONENTS
   CodeGen
@@ -20,6 +22,7 @@ add_llvm_target(MyArchCodeGen
   Support
   Target
   MyArchInfo
+  AsmPrinter
 
   ADD_TO_COMPONENT
   MyArch
