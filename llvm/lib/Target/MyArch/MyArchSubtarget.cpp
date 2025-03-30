@@ -1,5 +1,5 @@
-#include "MyArch.h"
 #include "MyArchSubtarget.h"
+#include "MyArch.h"
 #include "llvm/Target/TargetMachine.h"
 
 using namespace llvm;
@@ -10,8 +10,8 @@ using namespace llvm;
 #define GET_SUBTARGETINFO_CTOR
 #include "MyArchGenSubtargetInfo.inc"
 
-MyArchSubtarget::MyArchSubtarget(const StringRef &CPU, const StringRef &TuneCPU,
-                           const StringRef &FS, const TargetMachine &TM)
-    : MyArchGenSubtargetInfo(TM.getTargetTriple(), CPU, TuneCPU, FS) {
+MyArchSubtarget::MyArchSubtarget(const Triple &TT, const std::string &CPU,
+                                 const std::string &FS, const TargetMachine &TM)
+    : MyArchGenSubtargetInfo(TT, CPU, /*TuneCPU=*/CPU, FS), TLInfo(TM, *this) {
   MYARCH_DUMP_CYAN
 }

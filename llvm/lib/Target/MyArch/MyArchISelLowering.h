@@ -22,6 +22,20 @@ enum NodeType : unsigned {
 
 } // namespace MyArchISD
 
+class MyArchTargetLowering : public TargetLowering {
+public:
+  explicit MyArchTargetLowering(const TargetMachine &TM,
+                                const MyArchSubtarget &STI);
+
+  /// This method returns the name of a target specific DAG node.
+  const char *getTargetNodeName(unsigned Opcode) const override;
+
+  MyArchSubtarget const &getSubtarget() const { return STI; }
+
+private:
+  const MyArchSubtarget &STI;
+};
+
 } // end namespace llvm
 
 #endif // LLVM_LIB_TARGET_MYARCH_MYARCHISELLOWERING_H

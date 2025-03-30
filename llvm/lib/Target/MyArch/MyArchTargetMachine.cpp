@@ -42,7 +42,8 @@ MyArchTargetMachine::MyArchTargetMachine(const Target &T, const Triple &TT,
                                TT, CPU, FS, Options,
                                getEffectiveRelocModel(JIT, RM),
                                getEffectiveCodeModel(CM, CodeModel::Small), OL),
-      TLOF(std::make_unique<TargetLoweringObjectFileELF>()) {
+      TLOF(std::make_unique<TargetLoweringObjectFileELF>()),
+      Subtarget(TT, std::string(CPU), std::string(FS), *this) {
   MYARCH_DUMP_CYAN
   initAsmInfo();
 }
