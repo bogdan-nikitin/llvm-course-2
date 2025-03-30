@@ -1,6 +1,7 @@
 add_llvm_component_library(LLVMMyArchDesc
   MyArchMCTargetDesc.cpp
   MyArchMCAsmInfo.cpp
+  MyArchInstPrinter.cpp
 
   LINK_COMPONENTS
   MC
