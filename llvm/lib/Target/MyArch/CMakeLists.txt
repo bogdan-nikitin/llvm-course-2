@@ -7,6 +7,7 @@ tablegen(LLVM MyArchGenInstrInfo.inc -gen-instr-info)
 tablegen(LLVM MyArchGenSubtargetInfo.inc -gen-subtarget)
 tablegen(LLVM MyArchGenMCPseudoLowering.inc -gen-pseudo-lowering)
 tablegen(LLVM MyArchGenDAGISel.inc -gen-dag-isel)
+tablegen(LLVM MyArchGenCallingConv.inc -gen-callingconv)
 
 add_public_tablegen_target(MyArchCommonTableGen)
 
