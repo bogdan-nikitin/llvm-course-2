@@ -5,8 +5,19 @@ namespace llvm {
 class MCCodeEmitter;
 class MCContext;
 class MCInstrInfo;
+class MCAsmBackend;
+class MCObjectTargetWriter;
+class MCRegisterInfo;
+class MCSubtargetInfo;
+class MCTargetOptions;
+class Target;
 
-MCCodeEmitter *createMyArchMCCodeEmitter(const MCInstrInfo &MCII, MCContext &Ctx);
+MCCodeEmitter *createMyArchMCCodeEmitter(const MCInstrInfo &MCII,
+                                         MCContext &Ctx);
+MCAsmBackend *createMyArchAsmBackend(const Target &T,
+                                     const MCSubtargetInfo &STI,
+                                     const MCRegisterInfo &MRI,
+                                     const MCTargetOptions &Options);
 } // namespace llvm
 
 // Defines symbolic names for MyArch registers.  This defines a mapping from
