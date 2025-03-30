@@ -4,6 +4,7 @@ add_llvm_component_library(LLVMMyArchDesc
   MyArchInstPrinter.cpp
   MyArchMCCodeEmitter.cpp
   MyArchAsmBackend.cpp
+  MyArchELFObjectWriter.cpp
 
   LINK_COMPONENTS
   MC
