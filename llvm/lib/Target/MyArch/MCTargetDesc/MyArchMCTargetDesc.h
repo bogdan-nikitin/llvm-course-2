@@ -1,15 +1,22 @@
 #ifndef LLVM_LIB_TARGET_MYARCH_MCTARGETDESC_MYARCHMCTARGETDESC_H
 #define LLVM_LIB_TARGET_MYARCH_MCTARGETDESC_MYARCHMCTARGETDESC_H
 
+namespace llvm {
+class MCCodeEmitter;
+class MCContext;
+class MCInstrInfo;
+
+MCCodeEmitter *createMyArchMCCodeEmitter(const MCInstrInfo &MCII, MCContext &Ctx);
+} // namespace llvm
+
 // Defines symbolic names for MyArch registers.  This defines a mapping from
- // register name to register number.
- //
- #define GET_REGINFO_ENUM
- #include "MyArchGenRegisterInfo.inc"
+// register name to register number.
+//
+#define GET_REGINFO_ENUM
+#include "MyArchGenRegisterInfo.inc"
 
 // Defines symbolic names for the MyArch instructions.
- #define GET_INSTRINFO_ENUM
- #include "MyArchGenInstrInfo.inc"
- 
+#define GET_INSTRINFO_ENUM
+#include "MyArchGenInstrInfo.inc"
 
 #endif // LLVM_LIB_TARGET_MYARCH_MCTARGETDESC_MYARCHMCTARGETDESC_H
