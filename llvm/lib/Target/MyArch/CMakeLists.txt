@@ -20,6 +20,7 @@ add_llvm_target(MyArchCodeGen
   MyArchAsmPrinter.cpp
   MyArchISelDagToDag.cpp
   MyArchISelLowering.cpp
+  MyArchMCInstLower.cpp
 
   LINK_COMPONENTS
   CodeGen

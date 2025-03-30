@@ -22,7 +22,19 @@
 namespace llvm {
 class MyArchTargetMachine;
 class FunctionPass;
+class AsmPrinter;
+class InstructionSelector;
+class MCInst;
+class MCOperand;
+class MachineInstr;
+class MachineOperand;
+class PassRegistry;
 
+bool lowerMyArchMachineInstrToMCInst(const MachineInstr *MI, MCInst &OutMI,
+                                     AsmPrinter &AP);
+bool LowerMyArchMachineOperandToMCOperand(const MachineOperand &MO,
+                                          MCOperand &MCOp,
+                                          const AsmPrinter &AP);
 FunctionPass *createMyArchISelDag(MyArchTargetMachine &TM,
                                   CodeGenOptLevel OptLevel);
 

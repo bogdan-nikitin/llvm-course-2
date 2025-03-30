@@ -27,8 +27,8 @@ public:
   /// has variable sized allocas or if frame pointer elimination is disabled.
   bool hasFPImpl(const MachineFunction &MF) const override { return false; }
 
- private:
-   const MyArchSubtarget &STI;
+private:
+  const MyArchSubtarget &STI;
 };
 
 } // namespace llvm
