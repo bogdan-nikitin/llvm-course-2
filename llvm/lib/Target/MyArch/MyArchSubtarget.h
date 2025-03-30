@@ -2,8 +2,9 @@
 #define LLVM_LIB_TARGET_MYARCH_MYARCHSUBTARGET_H
 
 #include "MyArch.h"
-#include "MyArchISelLowering.h"
 #include "MyArchFrameLowering.h"
+#include "MyArchISelLowering.h"
+#include "MyArchRegisterInfo.h"
 #include "llvm/CodeGen/TargetSubtargetInfo.h"
 
 #define GET_SUBTARGETINFO_HEADER
@@ -14,6 +15,7 @@ namespace llvm {
 class MyArchSubtarget : public MyArchGenSubtargetInfo {
   MyArchTargetLowering TLInfo;
   MyArchFrameLowering FrameLowering;
+  MyArchRegisterInfo RegInfo;
 
 public:
   MyArchSubtarget(const Triple &TT, const std::string &CPU,
@@ -30,6 +32,10 @@ public:
   const MyArchFrameLowering *getFrameLowering() const override {
     MYARCH_DUMP_CYAN
     return &FrameLowering;
+  }
+  const MyArchRegisterInfo *getRegisterInfo() const override {
+    MYARCH_DUMP_CYAN
+    return &RegInfo;
   }
 };
 
