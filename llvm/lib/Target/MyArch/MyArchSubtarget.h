@@ -4,7 +4,9 @@
 #include "MyArch.h"
 #include "MyArchFrameLowering.h"
 #include "MyArchISelLowering.h"
+#include "MyArchInstrInfo.h"
 #include "MyArchRegisterInfo.h"
+#include "llvm/CodeGen/SelectionDAGTargetInfo.h"
 #include "llvm/CodeGen/TargetSubtargetInfo.h"
 
 #define GET_SUBTARGETINFO_HEADER
@@ -16,6 +18,8 @@ class MyArchSubtarget : public MyArchGenSubtargetInfo {
   MyArchTargetLowering TLInfo;
   MyArchFrameLowering FrameLowering;
   MyArchRegisterInfo RegInfo;
+  MyArchInstrInfo InstrInfo;
+  SelectionDAGTargetInfo TSInfo;
 
 public:
   MyArchSubtarget(const Triple &TT, const std::string &CPU,
@@ -36,6 +40,11 @@ public:
   const MyArchRegisterInfo *getRegisterInfo() const override {
     MYARCH_DUMP_CYAN
     return &RegInfo;
+  }
+  const MyArchInstrInfo *getInstrInfo() const override { return &InstrInfo; }
+  const SelectionDAGTargetInfo *getSelectionDAGInfo() const override {
+    MYARCH_DUMP_CYAN
+    return &TSInfo;
   }
 };
 

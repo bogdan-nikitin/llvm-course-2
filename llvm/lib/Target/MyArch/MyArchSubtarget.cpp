@@ -13,6 +13,6 @@ using namespace llvm;
 MyArchSubtarget::MyArchSubtarget(const Triple &TT, const std::string &CPU,
                                  const std::string &FS, const TargetMachine &TM)
     : MyArchGenSubtargetInfo(TT, CPU, /*TuneCPU=*/CPU, FS), TLInfo(TM, *this),
-      FrameLowering(*this) {
+      FrameLowering(*this), InstrInfo() {
   MYARCH_DUMP_CYAN
 }
