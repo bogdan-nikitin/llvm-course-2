@@ -53,3 +53,15 @@ let isAsCheapAsAMove = 1, isCodeGenOnly = 1, isReMaterializable = 1, r2 = 0 in
 def MOVLI : MyArchInst<0x26, (outs GPR:$r1), (ins simm16:$r3_imm),
                        "MOVli $r1 $r3_imm",
                        [(set GPR:$r1, simm16:$r3_imm)]>;
+
+// flush
+ let r1 = 0, r2 = 0, r3_imm = 0 in
+ def FLUSH : MyArchInst<0x13, (outs), (ins), "FLUSH", [(int_myarch_flush)]>;
+ 
+ // putpixel
+ def PUTPIXEL : MyArchInst<0xAB, (outs), (ins GPR:$r1, GPR:$r2, GPR:$r3_imm),
+                       "PUTPIXEL $r1 $r2 $r3_imm", [(int_myarch_putpixel GPR:$r1, GPR:$r2, GPR:$r3_imm)]>;
+
+// rand
+ let r2 = 0, r3_imm = 0 in
+ def RAND : MyArchInst<0xCC, (outs GPR:$r1), (ins), "RAND $r1", [(set GPR:$r1, (int_myarch_rand))]>;
