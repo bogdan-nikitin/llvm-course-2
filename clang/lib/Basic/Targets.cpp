@@ -27,6 +27,7 @@
 #include "Targets/M68k.h"
 #include "Targets/MSP430.h"
 #include "Targets/Mips.h"
+#include "Targets/MyArch.h"
 #include "Targets/NVPTX.h"
 #include "Targets/OSTargets.h"
 #include "Targets/PNaCl.h"
@@ -357,6 +358,9 @@ std::unique_ptr<TargetInfo> AllocateTarget(const llvm::Triple &Triple,
     default:
       return std::make_unique<M68kTargetInfo>(Triple, Opts);
     }
+
+  case llvm::Triple::myarch:
+    return std::make_unique<MyArchTargetInfo>(Triple, Opts);
 
   case llvm::Triple::ppc:
     switch (os) {
